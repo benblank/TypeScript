@@ -306,6 +306,8 @@ export function isExternalModuleNameRelative(moduleName: string): boolean {
 }
 
 export function sortAndDeduplicateDiagnostics<T extends Diagnostic>(diagnostics: readonly T[]): SortedReadonlyArray<T> {
+    diagnostics = diagnostics.filter((diagnostic) => !diagnostic.file || !/(?:^|\/)node_modules(?:\/|$)/.test(diagnostic.file.path));
+
     return sortAndDeduplicate<T>(diagnostics, compareDiagnostics);
 }
 
